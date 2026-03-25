@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { RouterModule, Routes, ExtraOptions } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileModule } from './profile/profile.module';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 const routes: Routes = [
   {
@@ -15,20 +15,13 @@ const routes: Routes = [
 ];
 
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    BrowserAnimationsModule,
-    RouterModule.forRoot(routes, {
-    initialNavigation: 'enabledBlocking'
-}),
-    ProfileModule,
-    HttpClientModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        RouterModule.forRoot(routes, {
+            initialNavigation: 'enabledBlocking'
+        }),
+        ProfileModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }

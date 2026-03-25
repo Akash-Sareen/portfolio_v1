@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../profile.service';
 
 @Component({
-  selector: 'app-extra-ciricular',
-  templateUrl: './extra-ciricular.component.html',
-  styleUrls: ['./extra-ciricular.component.scss']
+    selector: 'app-extra-ciricular',
+    templateUrl: './extra-ciricular.component.html',
+    styleUrls: ['./extra-ciricular.component.scss'],
+    standalone: false
 })
 export class ExtraCiricularComponent implements OnInit {
   extras: any

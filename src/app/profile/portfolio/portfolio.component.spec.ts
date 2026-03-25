@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PortfolioComponent } from './portfolio.component';
 
@@ -6,8 +7,9 @@ describe('PortfolioComponent', () => {
   let component: PortfolioComponent;
   let fixture: ComponentFixture<PortfolioComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [ PortfolioComponent ]
     })
     .compileComponents();
