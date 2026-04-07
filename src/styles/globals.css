@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+/* ── Design Tokens ───────────────────────────────────────────── */
+:root {
+  --bg: #050508;
+  --bg-2: #0a0a12;
+  --bg-3: #0d0d1a;
+  --accent: #00f5ff;
+  --accent-dim: rgba(0, 245, 255, 0.15);
+  --accent-glow: 0 0 20px rgba(0, 245, 255, 0.4);
+  --highlight: #ffaa00;
+  --text: #c8d8e8;
+  --text-dim: #6a7a8a;
+  --border: rgba(0, 245, 255, 0.2);
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --section-pad: clamp(3.5rem, 8vw, 8rem) clamp(1.2rem, 5vw, 5rem);
+}
+
+/* ── Reset ───────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: inherit; }
+ul { list-style: none; }
+
+/* ── Custom Scrollbar ────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* ── Custom Cursor ───────────────────────────────────────────── */
+.cursor {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.08s ease, opacity 0.3s;
+  box-shadow: 0 0 12px 4px rgba(0, 245, 255, 0.6);
+  mix-blend-mode: screen;
+}
+.cursor-ring {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 245, 255, 0.5);
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s ease, width 0.2s, height 0.2s;
+}
+.cursor-ring.hovered { width: 50px; height: 50px; border-color: var(--accent); }
+
+/* ── Shared Section Label ────────────────────────────────────── */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* ── Glitch animation ────────────────────────────────────────── */
+@keyframes glitch {
+  0%, 100% { text-shadow: none; clip-path: none; transform: none; }
+  5%  { text-shadow: -3px 0 #ff0043, 3px 0 #00f5ff; transform: skewX(-1deg); }
+  10% { text-shadow: 3px 0 #ff0043, -3px 0 #00f5ff; transform: skewX(1deg); }
+  15% { text-shadow: none; transform: none; }
+  80% { text-shadow: -2px 0 #ff0043, 2px 0 #00f5ff; }
+  85% { text-shadow: none; }
+}
+
+/* ── Fade-in-up (GSAP baseline) ──────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(30px); }
+
+/* ── Noise overlay ───────────────────────────────────────────── */
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Scanline overlay ────────────────────────────────────────── */
+.scanlines::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent, transparent 2px,
+    rgba(0, 245, 255, 0.015) 2px, rgba(0, 245, 255, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Terminal badge ──────────────────────────────────────────── */
+.tag-pill {
+  display: inline-block;
+  padding: 0.2em 0.7em;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-size: 0.65rem;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  background: var(--accent-dim);
+  font-family: var(--font-mono);
+}
+
+/* ── Terminal button ─────────────────────────────────────────── */
+.btn-terminal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0.7em 1.6em;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+  transition: color var(--transition), background var(--transition);
+}
+.btn-terminal::before,
+.btn-terminal::after {
+  content: '';
+  position: absolute;
+  background: var(--accent);
+  transition: transform 0.25s ease;
+}
+.btn-terminal::before { top: 0; left: 0; width: 2px; height: 100%; transform: scaleY(0); transform-origin: top; }
+.btn-terminal::after  { bottom: 0; right: 0; width: 100%; height: 2px; transform: scaleX(0); transform-origin: right; }
+.btn-terminal:hover::before { transform: scaleY(1); }
+.btn-terminal:hover::after  { transform: scaleX(1); }
+.btn-terminal:hover { background: var(--accent-dim); }
+
+/* ── Canvas wrapper ──────────────────────────────────────────── */
+.canvas-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.canvas-container canvas { display: block; }
+
+/* ── Section content sits above canvas ──────────────────────── */
+.section-content {
+  position: relative;
+  z-index: 2;
+}
